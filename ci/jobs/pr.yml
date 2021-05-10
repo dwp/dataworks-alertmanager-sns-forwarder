@@ -1,29 +1,29 @@
 jobs:
-  - name: dataworks-repo-template-docker-pr
+  - name: dataworks-alertmanager-sns-forwarder-pr
     plan:
-      - get: dataworks-repo-template-docker-pr
+      - get: dataworks-alertmanager-sns-forwarder-pr
         trigger: true
         version: every
-      - put: dataworks-repo-template-docker-pr
+      - put: dataworks-alertmanager-sns-forwarder-pr
         params:
-          path: dataworks-repo-template-docker-pr
+          path: dataworks-alertmanager-sns-forwarder-pr
           status: pending
       - .: (( inject meta.plan.terraform-bootstrap ))
         input_mapping:
-          dataworks-repo-template-docker: dataworks-repo-template-docker-pr
+          dataworks-alertmanager-sns-forwarder: dataworks-alertmanager-sns-forwarder-pr
       - .: (( inject meta.plan.terraform-plan ))
         input_mapping:
-          dataworks-repo-template-docker: dataworks-repo-template-docker-pr
+          dataworks-alertmanager-sns-forwarder: dataworks-alertmanager-sns-forwarder-pr
         params:
           TF_WORKSPACE: "management"
           DETAILED_EXITCODE: ""
         on_failure:
-          put: dataworks-repo-template-docker-pr
+          put: dataworks-alertmanager-sns-forwarder-pr
           params:
-            path: dataworks-repo-template-docker-pr
+            path: dataworks-alertmanager-sns-forwarder-pr
             status: failure
         on_success:
-          put: dataworks-repo-template-docker-pr
+          put: dataworks-alertmanager-sns-forwarder-pr
           params:
-            path: dataworks-repo-template-docker-pr
+            path: dataworks-alertmanager-sns-forwarder-pr
             status: success
