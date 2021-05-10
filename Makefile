@@ -1,5 +1,3 @@
-SHELL:=bash
-
 aws_profile=default
 aws_region=eu-west-2
 
@@ -45,7 +43,7 @@ terraform-apply: ## Run `terraform apply` from repo root
 terraform-workspace-new: ## Creates new Terraform workspace with Concourse remote execution. Run `terraform-workspace-new workspace=<workspace_name>`
 	fly -t aws-concourse execute --config create-workspace.yml --input repo=. -v workspace="$(workspace)"
 
-.PHONY all: clean test bin
+all: clean test bin
 
 bin: bin/linux/${PROJECT_NAME}
 
@@ -60,3 +58,5 @@ test:
 
 clean:
 	rm -rf bin
+
+.PHONY: all
