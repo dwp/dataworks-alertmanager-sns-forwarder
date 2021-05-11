@@ -2,13 +2,6 @@
 set -e
 echo "INFO: Checking container configuration..."
 
-# Commented the below because as it currently stands no config files are needed in S3
-# if [ -z "${ALERTMANAGER_SNS_FORWARDER_CONFIG_S3_BUCKET}" -o -z "${ALERTMANAGER_SNS_FORWARDER_CONFIG_S3_PREFIX}" ]; then
-#   echo "ERROR: ALERTMANAGER_SNS_FORWARDER_CONFIG_S3_BUCKET and ALERTMANAGER_SNS_FORWARDER_CONFIG_S3_PREFIX environment variables must be provided"
-#   exit 1
-# fi
-# S3_URI="s3://${ALERTMANAGER_SNS_FORWARDER_CONFIG_S3_BUCKET}/${ALERTMANAGER_SNS_FORWARDER_CONFIG_S3_PREFIX}"
-
 # If either of the AWS credentials variables were provided, validate them
 if [ -n "${AWS_ACCESS_KEY_ID}${AWS_SECRET_ACCESS_KEY}" ]; then
   if [ -z "${AWS_ACCESS_KEY_ID}" -o -z "${AWS_SECRET_ACCESS_KEY}" ]; then
@@ -45,11 +38,6 @@ EOF
 else
   echo "INFO: Using attached IAM roles/instance profiles to authenticate with S3 as no AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY have been provided"
 fi
-
-# Commented the below because as it currently stands no config files are needed in S3
-# echo "INFO: Copying cloudwatch-exporter configuration file(s) from ${S3_URI} to /etc/cloudwatch-exporter..."
-# aws ${PROFILE_OPTION} s3 cp ${S3_URI}/agent-config.yml agent-config.yml
-# aws ${PROFILE_OPTION} s3 cp ${S3_URI}/agent-application-config.yml agent-application-config.yml
 
 export AWS_REGION=eu-west-2
 
