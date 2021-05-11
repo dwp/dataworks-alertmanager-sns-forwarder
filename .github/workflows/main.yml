@@ -10,7 +10,7 @@ on:
       - 'ci/**'
 
 env:
-  IMAGE_NAME: dwpdigital/dataworks-alertmanager-sns-forwarder
+  IMAGE_NAME: dwpdigital/alertmanager-sns-forwarder
 
 jobs:
   get-publish-version:
